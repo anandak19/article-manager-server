@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: article_manager_app
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    volumes:
+      - ./src:/usr/src/app/src

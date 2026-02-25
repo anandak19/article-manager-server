@@ -1,0 +1,40 @@
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { ISuccessResponse } from '@shared/interfaces/http-response.interface';
+import { map, Observable } from 'rxjs';
+
+@Injectable()
+export class ResponseInterceptor<T> implements NestInterceptor<T, ISuccessResponse<T>> {
+  intercept(context: ExecutionContext, next: CallHandler<T>): Observable<ISuccessResponse<T>> {
+    return next.handle().pipe(
+      map((data: T): ISuccessResponse<T> => {
+        const res = context.switchToHttp().getResponse<Response>();
+
+        let message = 'Request Successfull';
+        let responseData: T | undefined = data;
+
+        if (
+          typeof data === 'object' &&
+          data !== null &&
+          'message' in data &&
+          typeof (data as Record<string, unknown>).message === 'string'
+        ) {
+          message = (data as Record<string, unknown>).message as string;
+
+          const rest = Object.fromEntries(
+            Object.entries(data as Record<string, unknown>).filter(([key]) => key !== 'message'),
+          );
+          responseData = Object.keys(rest).length ? (rest as T) : undefined;
+        }
+
+        const baseResponse = {
+          statusCode: res.status,
+          success: true,
+          message,
+          timestamp: new Date().toISOString(),
+        };
+
+        return responseData ? { ...baseResponse, data: responseData } : baseResponse;
+      }),
+    );
+  }
+}
