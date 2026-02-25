@@ -1,10 +1,10 @@
 services:
   redis:
     image: redis:alpine
-    container_name: redis_server
+    container_name: am_redis_server
     env_file:
       - .env
-    helthcheck:
+    healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 10s
       timeout: 5s
@@ -21,4 +21,4 @@ services:
 
 volumes:
   cache:
-    diver: local
+    driver: local

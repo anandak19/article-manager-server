@@ -1,7 +1,10 @@
-export interface HttpResponse {
+export interface IBaseResponse {
+  message: string;
+}
+
+export interface HttpResponse extends IBaseResponse {
   statusCode: number;
   success: boolean;
-  message: string;
   timestamp: string;
 }
 
