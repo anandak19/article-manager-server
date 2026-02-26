@@ -6,6 +6,11 @@ export default () => {
     REDIS_URI: process.env.REDIS_URI,
     REDIS_PASS: process.env.REDIS_PASS,
     REDIS_PORT: process.env.REDIS_PORT,
+
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PASS: process.env.SMTP_PASS,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_FROM: process.env.SMTP_FROM,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

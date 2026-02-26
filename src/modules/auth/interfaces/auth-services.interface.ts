@@ -5,3 +5,8 @@ export interface IAuthService {
   varifyEmail(data: UserSignupDto): Promise<IBaseResponse>;
   verifyOtp(): Promise<IBaseResponse>;
 }
+
+export interface ISignupService {
+  varifyEmail(data: UserSignupDto): Promise<IBaseResponse>;
+  verifyOtp(): Promise<IBaseResponse>;
+}

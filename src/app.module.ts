@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ArticlesModule } from './modules/articles/articles.module';
-import { CacheModule } from '@core/lib/cache/cache.module';
 import { ConfigModule } from '@nestjs/config';
+import { CacheModule } from '@core/lib/cache/cache.module';
 
 @Module({
   imports: [
