@@ -1,7 +1,7 @@
 import { AppConfig } from '@config/app.config';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodeMailer from 'nodemailer';
+import * as nodeMailer from 'nodemailer'; // 26 high vulnarable
 import { sendEmailDto } from './email.dto';
 
 @Injectable()

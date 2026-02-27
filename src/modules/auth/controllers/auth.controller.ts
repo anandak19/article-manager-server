@@ -1,21 +1,40 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { UserSignupDto } from '../dto/user-signup.dto';
 import { AUTH_TOKENS } from '../auth.tokens';
-import type { IAuthService } from '../interfaces/auth-services.interface';
+import type { IAuthService, ISignupService } from '../interfaces/auth-services.interface';
+import { VerfiyOtpDto } from '../dto/verify-otp.dto';
+import { SignupEmailDto } from '../dto/signup-email.dto';
+import { LoginUserDto } from '../dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(@Inject(AUTH_TOKENS.AUTH_SERVICE) private _authService: IAuthService) {}
+  constructor(
+    @Inject(AUTH_TOKENS.AUTH_SERVICE) private _authService: IAuthService,
+    @Inject(AUTH_TOKENS.SIGNUP_SERVICE) private _signupService: ISignupService,
+  ) {}
 
   @Post('signup/data')
   varifyEmail(@Body() dto: UserSignupDto) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this._authService.varifyEmail(dto);
+    return this._signupService.varifyEmail(dto);
   }
 
   @Post('signup/verify')
-  verifyOtp() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this._authService.verifyOtp();
+  verifyOtp(@Body() dto: VerfiyOtpDto) {
+    return this._signupService.verifyOtp(dto);
+  }
+
+  @Post('signup/varify/time')
+  getRemainingTime(@Body() dto: SignupEmailDto) {
+    return this._signupService.getOtpTimeLeft(dto.email);
+  }
+
+  @Post('signup/verify/resend')
+  resendOtp(@Body() dto: SignupEmailDto) {
+    return this._signupService.resendOtp(dto.email);
+  }
+
+  @Post('login')
+  loginUser(@Body() dto: LoginUserDto) {
+    return this._authService.login(dto);
   }
 }

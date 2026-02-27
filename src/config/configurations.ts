@@ -11,6 +11,8 @@ export default () => {
     SMTP_PASS: process.env.SMTP_PASS,
     SMTP_PORT: process.env.SMTP_PORT,
     SMTP_FROM: process.env.SMTP_FROM,
+
+    MONGO_URI: process.env.MONGO_URI,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

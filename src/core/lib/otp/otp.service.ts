@@ -13,17 +13,17 @@ export class OtpService {
   }
 
   // save otp in session 60sec
-  async storeOtp(uuid: string, otp: string, ttl = 1000 * 60 * 2): Promise<void> {
-    await this._cacheService.set(`otp:${uuid}`, otp, ttl);
+  async storeOtp(email: string, otp: string, ttl = 1000 * 60 * 2): Promise<void> {
+    await this._cacheService.set(`otp:${email}`, otp, ttl);
   }
 
-  async getOtpTimeLeft(uuid: string) {
-    return await this._cacheService.getReminingTime(`otp:${uuid}`);
+  async getOtpTimeLeft(email: string) {
+    return await this._cacheService.getReminingTime(`otp:${email}`);
   }
 
   // varify otp
-  async varifyOtp(uuid: string, otp: string): Promise<boolean> {
-    const storedOtp = await this._cacheService.get(`otp:${uuid}`);
+  async varifyOtp(email: string, otp: string): Promise<boolean> {
+    const storedOtp = await this._cacheService.get(`otp:${email}`);
     return storedOtp === otp;
   }
 }

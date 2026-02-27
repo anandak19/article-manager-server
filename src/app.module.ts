@@ -6,6 +6,8 @@ import { UsersModule } from './modules/users/users.module';
 import { ArticlesModule } from './modules/articles/articles.module';
 import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from '@core/lib/cache/cache.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { mongooseOption } from '@config/database/database.options';
 
 @Module({
   imports: [
@@ -13,6 +15,7 @@ import { CacheModule } from '@core/lib/cache/cache.module';
     UsersModule,
     ArticlesModule,
     CacheModule,
+    MongooseModule.forRootAsync(mongooseOption),
     ConfigModule.forRoot({ isGlobal: true }),
   ],
   controllers: [AppController],
