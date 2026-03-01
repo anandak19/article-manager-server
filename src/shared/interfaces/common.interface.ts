@@ -1,3 +1,5 @@
+import { IPayload } from '@modules/users/interfaces/users.interface';
+
 export interface IAuthenticatedRequest extends Request {
-  user: any; // FIX ME : change to correct type
+  user: IPayload; // FIX ME : change to correct type
 }

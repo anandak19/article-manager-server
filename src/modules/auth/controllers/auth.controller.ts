@@ -1,11 +1,13 @@
-import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { UserSignupDto } from '../dto/user-signup.dto';
 import { AUTH_TOKENS } from '../auth.tokens';
-import type { IAuthService, ISignupService } from '../interfaces/auth-services.interface';
 import { VerfiyOtpDto } from '../dto/verify-otp.dto';
 import { SignupEmailDto } from '../dto/signup-email.dto';
-import type { Response } from 'express';
 import { LoginUserDto } from '../dto/login-user.dto';
+import type { Response } from 'express';
+import type { IAuthService, ISignupService } from '../interfaces/auth-services.interface';
+import type { IAuthenticatedRequest } from '@shared/interfaces/common.interface';
+import { AuthGuard } from '@core/guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -37,5 +39,16 @@ export class AuthController {
   @Post('login')
   loginUser(@Body() loginDto: LoginUserDto, @Res({ passthrough: true }) res: Response) {
     return this._authService.login(loginDto, res);
+  }
+
+  @Post('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    return this._authService.logout(res);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me')
+  getLoginUserData(@Req() req: IAuthenticatedRequest) {
+    return req.user;
   }
 }

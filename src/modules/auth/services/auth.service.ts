@@ -28,6 +28,11 @@ export class AuthService implements IAuthService {
     return { message: 'Login Success' };
   }
 
+  logout(res: Response): IBaseResponse {
+    this._cookieService.clearCookie(res);
+    return { message: 'Logout Success' };
+  }
+
   // used for passport auth, not using now
   async validateLocalUser(email: string, password: string): Promise<IUserRes> {
     return await this._userService.authenticateUser(email, password);

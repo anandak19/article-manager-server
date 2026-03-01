@@ -8,6 +8,7 @@ import { LoginUserDto } from '../dto/login-user.dto';
 
 export interface IAuthService {
   login(loginDto: LoginUserDto, res: Response): Promise<IBaseResponse>;
+  logout(res: Response): IBaseResponse;
   validateLocalUser(email: string, password: string): Promise<IUserRes>;
 }
 
