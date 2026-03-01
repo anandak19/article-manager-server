@@ -1,10 +1,17 @@
-import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { IUserService } from '../interfaces/users-services.interface';
 import { IBaseResponse } from '@shared/interfaces/http-response.interface';
 import { HashService } from '@core/lib/hash/hash.service';
-import { ICreateUser, IUser } from '../interfaces/users.interface';
+import { ICreateUser, IUser, IUserRes } from '../interfaces/users.interface';
 import { USER_TOKENS } from '../users.tokens';
 import type { IUserRepository } from '../interfaces/users-repositories.interface';
+import { UserMapper } from '../Mappers/user.mapper';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -36,5 +43,19 @@ export class UserService implements IUserService {
   async isEmailExists(email: string): Promise<boolean> {
     const exists = await this._userRepo.findOne({ email: email });
     return exists ? true : false;
+  }
+
+  async authenticateUser(email: string, password: string): Promise<IUserRes> {
+    const user = await this._userRepo.findOne({ email });
+
+    if (!user) {
+      throw new NotFoundException('User not found!. Please signup first');
+    }
+
+    const isMatch = await this._hash.comparePassword(password, user.passwordHash);
+    if (!isMatch) {
+      throw new BadRequestException('Incorrect Password');
+    }
+    return UserMapper.toUserRes(user);
   }
 }

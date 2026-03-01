@@ -13,6 +13,8 @@ export default () => {
     SMTP_FROM: process.env.SMTP_FROM,
 
     MONGO_URI: process.env.MONGO_URI,
+
+    JWT_SECRET: process.env.JWT_SECRET,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

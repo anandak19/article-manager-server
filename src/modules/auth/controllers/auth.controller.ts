@@ -1,9 +1,10 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import { UserSignupDto } from '../dto/user-signup.dto';
 import { AUTH_TOKENS } from '../auth.tokens';
 import type { IAuthService, ISignupService } from '../interfaces/auth-services.interface';
 import { VerfiyOtpDto } from '../dto/verify-otp.dto';
 import { SignupEmailDto } from '../dto/signup-email.dto';
+import type { Response } from 'express';
 import { LoginUserDto } from '../dto/login-user.dto';
 
 @Controller('auth')
@@ -34,7 +35,7 @@ export class AuthController {
   }
 
   @Post('login')
-  loginUser(@Body() dto: LoginUserDto) {
-    return this._authService.login(dto);
+  loginUser(@Body() loginDto: LoginUserDto, @Res({ passthrough: true }) res: Response) {
+    return this._authService.login(loginDto, res);
   }
 }

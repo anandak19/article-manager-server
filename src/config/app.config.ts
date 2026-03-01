@@ -12,6 +12,8 @@ export interface AppConfig {
   SMTP_FROM: string;
 
   MONGO_URI: string;
+
+  JWT_SECRET: string;
 }
 
 export const appConfigSchema = Joi.object<AppConfig, true>({
@@ -26,4 +28,6 @@ export const appConfigSchema = Joi.object<AppConfig, true>({
   SMTP_FROM: Joi.string().required(),
 
   MONGO_URI: Joi.string().required(),
+
+  JWT_SECRET: Joi.string().required(),
 });

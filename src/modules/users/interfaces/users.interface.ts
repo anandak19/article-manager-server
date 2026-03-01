@@ -8,3 +8,7 @@ export interface ICreateUser {
 export interface IUser extends ICreateUser {
   id: string;
 }
+
+export type IUserRes = Omit<IUser, 'passwordHash'>;
+
+export type IPayload = Omit<IUser, 'lastName' | 'passwordHash'>;
