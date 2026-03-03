@@ -16,3 +16,13 @@ export interface IErrorResponse extends HttpResponse {
 export interface ISuccessResponse<T> extends HttpResponse {
   data?: T;
 }
+
+export interface IPaginatedResult<T> {
+  documents: T[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    pages: number;
+  };
+}

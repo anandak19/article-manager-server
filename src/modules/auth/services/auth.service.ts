@@ -17,9 +17,7 @@ export class AuthService implements IAuthService {
     private _cookieService: CookieService,
     @Inject(USER_TOKENS.USER_SERVICE) private _userService: IUserService,
     @Inject(AUTH_TOKENS.AUTH_TOKEN_SERVICE) private _tokenService: ITokenService,
-  ) {
-    console.log('auth service init');
-  }
+  ) {}
 
   async login(loginDto: LoginUserDto, res: Response): Promise<IBaseResponse> {
     const user = await this._userService.authenticateUser(loginDto.email, loginDto.password);

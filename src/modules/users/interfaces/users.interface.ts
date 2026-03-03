@@ -12,3 +12,8 @@ export interface IUser extends ICreateUser {
 export type IUserRes = Omit<IUser, 'passwordHash'>;
 
 export type IPayload = Omit<IUser, 'lastName' | 'passwordHash'>;
+
+export interface IWriter {
+  firstName: string;
+  lastName: string;
+}

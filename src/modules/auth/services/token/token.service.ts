@@ -7,7 +7,7 @@ import { StringValue } from 'ms';
 
 @Injectable()
 export class TokenService {
-  private readonly _accessTokenTime = '15m';
+  private readonly _accessTokenTime = '7d';
   private JWT_SECRET: string;
 
   constructor(

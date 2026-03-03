@@ -7,9 +7,10 @@ export const COOKIE_KEY = 'access-token';
 
 @Injectable()
 export class CookieService {
+  private readonly cookieMaxAge = 60 * 60 * 24 * 7; // 7d
   constructor(private configService: ConfigService<AppConfig>) {}
 
-  setCookie(res: Response, key: string, value: string, maxAgeSeconds: number = 3600) {
+  setCookie(res: Response, key: string, value: string, maxAgeSeconds: number = this.cookieMaxAge) {
     const environment = this.configService.get<string>('NODE_ENV')!;
     const isProd = environment === 'production';
 

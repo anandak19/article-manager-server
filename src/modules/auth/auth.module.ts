@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 import { AUTH_TOKENS } from './auth.tokens';
@@ -15,6 +15,7 @@ import { CookieModule } from '@core/lib/cookie/cookie.module';
 import { TokenService } from './services/token/token.service';
 import { JwtModule } from '@nestjs/jwt';
 
+@Global()
 @Module({
   imports: [
     CacheModule,
@@ -33,6 +34,6 @@ import { JwtModule } from '@nestjs/jwt';
     LocalStrategy,
     JwtStrategy,
   ],
-  exports: [AUTH_TOKENS.AUTH_SERVICE],
+  exports: [AUTH_TOKENS.AUTH_SERVICE, AUTH_TOKENS.AUTH_TOKEN_SERVICE],
 })
 export class AuthModule {}
