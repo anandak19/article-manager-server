@@ -12,6 +12,7 @@ import { ARTICLE_TOKEN } from '../article.token';
 import type { IArticleRepository } from '../interfaces/article-repository.interface';
 import { PaginationDto } from '@shared/dtos/pagination.dto';
 import { IArticleDetails, IListArticle } from '../interfaces/article.interface';
+import { UpdateArticleDto } from '../dtos/update-article.dto';
 
 @Injectable()
 export class ArticleService implements IArticleService {
@@ -51,5 +52,27 @@ export class ArticleService implements IArticleService {
       throw new NotFoundException('Article Not Found');
     }
     return res;
+  }
+
+  async updateById(
+    userId: string,
+    articleId: string,
+    update: UpdateArticleDto,
+  ): Promise<IArticleDetails> {
+    // check if the article with title exists
+    if (update.title) {
+      const existing = await this._articleRepo.findOneByTitle(update.title, userId, articleId);
+      if (existing) {
+        throw new ConflictException('You already have an article with this title');
+      }
+    }
+
+    const updated = await this._articleRepo.updateById(articleId, update);
+
+    if (!updated) {
+      throw new InternalServerErrorException('Article not found! Update faild');
+    }
+
+    return this.findOneById(updated._id.toString());
   }
 }

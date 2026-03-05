@@ -2,6 +2,7 @@ import { IBaseResponse, IPaginatedResult } from '@shared/interfaces/http-respons
 import { CreateArticleDto } from '../dtos/create-article.dto';
 import { PaginationDto } from '@shared/dtos/pagination.dto';
 import { IArticleDetails, IListArticle } from './article.interface';
+import { UpdateArticleDto } from '../dtos/update-article.dto';
 
 export interface IArticleService {
   create(createDto: CreateArticleDto, userId: string): Promise<IBaseResponse>;
@@ -11,4 +12,6 @@ export interface IArticleService {
   findOneById(id: string): Promise<IArticleDetails>;
 
   findAll(pagination: PaginationDto, userId?: string): Promise<IPaginatedResult<IListArticle>>;
+
+  updateById(userId: string, articleId: string, update: UpdateArticleDto): Promise<IArticleDetails>;
 }

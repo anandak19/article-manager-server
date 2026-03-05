@@ -8,6 +8,7 @@ import {
   Get,
   Inject,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -16,6 +17,7 @@ import {
 import type { IAuthenticatedRequest } from '@shared/interfaces/common.interface';
 import type { IArticleService } from '@modules/articles/interfaces/article-services.interface';
 import { PaginationDto } from '@shared/dtos/pagination.dto';
+import { UpdateArticleDto } from '@modules/articles/dtos/update-article.dto';
 
 @UseGuards(AuthGuard)
 @Controller('user/article')
@@ -40,5 +42,14 @@ export class UserArticleController {
   @Get(':id')
   findOneById(@Param('id') id: string) {
     return this._articleService.findOneById(id);
+  }
+
+  @Patch(':id')
+  updateById(
+    @Req() req: IAuthenticatedRequest,
+    @Param('id') id: string,
+    @Body() body: UpdateArticleDto,
+  ) {
+    return this._articleService.updateById(req.user.id, id, body);
   }
 }
