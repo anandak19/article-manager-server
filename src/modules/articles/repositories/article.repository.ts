@@ -7,6 +7,7 @@ import {
   ICreateArticle,
   IFindAllRepoRes,
   IListArticle,
+  IUpdateArticle,
 } from '../interfaces/article.interface';
 import { CreateArticleDto } from '../dtos/create-article.dto';
 import { IArticleRepository } from '../interfaces/article-repository.interface';
@@ -143,11 +144,31 @@ export class ArticleRepository implements IArticleRepository {
     };
   }
 
-  async findOneByTitle(title: string, userId: string): Promise<ArticlesDocument | null> {
+  async findOneByTitle(
+    title: string,
+    userId: string,
+    articleId?: string,
+  ): Promise<ArticlesDocument | null> {
+    const filterQuery: _QueryFilter<ArticlesDocument> = {
+      isDeleted: false,
+      title,
+      userId: new Types.ObjectId(userId),
+    };
+
+    if (articleId) {
+      filterQuery._id = { $ne: new Types.ObjectId(articleId) };
+    }
+
     return this._articleModel
-      .findOne({ title, userId: new Types.ObjectId(userId), isDeleted: false })
+      .findOne(filterQuery)
       .populate('userId', 'firstName lastName email')
       .exec();
+  }
+
+  async updateById(articleId: string, update: IUpdateArticle): Promise<ArticlesDocument | null> {
+    return await this._articleModel.findByIdAndUpdate(articleId, update, {
+      returnDocument: 'after',
+    });
   }
 
   async deleteOneById(id: string): Promise<boolean> {

@@ -7,7 +7,6 @@ import { OtpModule } from '@core/lib/otp/otp.module';
 import { EmailModule } from '@core/lib/email/email.module';
 import { UsersModule } from '@modules/users/users.module';
 import { SignupService } from './services/signup/signup.service';
-// import { LocalStrategy } from './strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';

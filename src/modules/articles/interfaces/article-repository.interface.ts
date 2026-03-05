@@ -7,11 +7,20 @@ import { IArticleDetails, IListArticle } from './article.interface';
 export interface IArticleRepository {
   create(createDto: CreateArticleDto, userId: string): Promise<ArticlesDocument>;
 
-  findOneByTitle(title: string, userId: string): Promise<ArticlesDocument | null>;
+  findOneByTitle(
+    title: string,
+    userId: string,
+    articleId?: string,
+  ): Promise<ArticlesDocument | null>;
 
   findOneById(id: string): Promise<IArticleDetails | null>;
 
   deleteOneById(id: string): Promise<boolean>;
 
   findAll(pagination: PaginationDto, userId?: string): Promise<IPaginatedResult<IListArticle>>;
+
+  updateById(
+    articleId: string,
+    update: Partial<ArticlesDocument>,
+  ): Promise<ArticlesDocument | null>;
 }

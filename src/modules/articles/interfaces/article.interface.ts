@@ -12,6 +12,8 @@ export interface IArticle extends Omit<ICreateArticle, 'userId'> {
   createdAt: string;
 }
 
+export type IUpdateArticle = Partial<Pick<IArticle, 'title' | 'content'>>;
+
 export interface IListArticle extends Pick<IArticle, 'title' | 'id' | 'createdAt'> {
   writerName: string;
 }
