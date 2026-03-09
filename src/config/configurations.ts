@@ -4,8 +4,8 @@ export default () => {
   const config = {
     NODE_ENV: process.env.NODE_ENV,
     REDIS_URI: process.env.REDIS_URI,
+    REDIS_USER: process.env.REDIS_USER,
     REDIS_PASS: process.env.REDIS_PASS,
-    REDIS_PORT: process.env.REDIS_PORT,
 
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_PASS: process.env.SMTP_PASS,
