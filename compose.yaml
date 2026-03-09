@@ -1,3 +1,6 @@
+include:
+  - infra.yml
+
 services:
   server:
     build:
